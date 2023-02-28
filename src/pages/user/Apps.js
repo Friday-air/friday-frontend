@@ -1,18 +1,19 @@
 import "../../App.css";
 import Layout from "./Layout";
 import { useNavigate } from "react-router-dom";
-import { useGetConnectedAppsQuery } from "../../store/app-api-slice";
+import { useGetConnectedAppsQuery,useGetAppsQuery } from "../../store/app-api-slice";
 
 function Apps() {
   const navigate = useNavigate();
   const { data: connected_apps } = useGetConnectedAppsQuery();
-
+  const { data: apps } = useGetAppsQuery();
   const handleNext = async (id) => {
-    navigate("/user/apps/new-list/" + id);
+    navigate(`/user/apps/new-list/${id}`)
   };
 
   return (
-    <Layout page_title="All Apps">
+    <>
+    {/* <Layout page_title="All Apps"> */}
       {/* Breadcrumb */}
       {/* <div className="flex justify-between m-3">
         <button type="button" className="btn-primary">
@@ -37,25 +38,27 @@ function Apps() {
       {/* content start */}
       {connected_apps?.data?.length ? (
         <div className="grid grid-cols-2 gap-4 m-3 md:grid-cols-4 lg:grid-cols-5 mt-5">
-          {connected_apps.data.map((app) => (
+          {connected_apps.data.map((app) => {
+            return  apps?.data?.map((item) => (
+            item?._id === app?.appId &&  
             <div
-              key={app.app_id}
+              key={item._id}
               className="border-2  border-white flex flex-col items-center justify-center p-3 bg-white rounded-md"
-              onClick={() => handleNext(app.app_id)}
+              onClick={() => handleNext(app?.appId)}
             >
               <div className="flex items-center justify-center w-20 h-20 mb-3 bg-gray-50 rounded">
                 <img
-                  src={app.app_info.image}
-                  alt={app.app_info.name}
+                  src={`http://localhost:8000/public/${item?.image}`}
+                  alt={item?.name}
                   className="w-10 h-10"
                 />
               </div>
               <h3 className="mb-2 text-sm font-semibold text-center">
-                {app.app_info.name}
+                {item?.name}
               </h3>
             </div>
-          ))}
-
+          ))
+          })}
           <div className="border-2  border-white flex flex-col items-center justify-center p-3 bg-white rounded-md min-h-[180px]">
             <div className="text-center">
               <button
@@ -84,7 +87,8 @@ function Apps() {
       )}
 
       {/* content  end*/}
-    </Layout>
+    {/* </Layout> */}
+    </>
   );
 }
 

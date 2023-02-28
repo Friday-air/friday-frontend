@@ -29,25 +29,28 @@ export default function Register() {
   const handleSubmit = async () => {
     //displatch login
     try {
-      const userData = await register({
-        name,
-        email,
-        password,
-        confirm_password,
-        agree,
-      }).unwrap();
-      console.log("userData", userData);
-      dispatch(setCredentials({ ...userData, user }));
-      setEmail("");
-      setPassword("");
-
-      window.location.reload();
-      toast.success("Registration Success.");
-    } catch (error) {
-      if (error.data.data.error) {
-        toast.error(error.data.data.error);
+      if(password !== confirm_password) {
+          toast.error("Password & confirm password do not match.")
       } else {
-        setError(error.data.data);
+        const userData = await register({
+          name,
+          email,
+          password,
+          confirm_password,
+          agree,
+        }).unwrap();
+        dispatch(setCredentials({ ...userData, user }));
+        setEmail("");
+        setPassword("");
+  
+        window.location.reload();
+        toast.success("Registration Success.");
+      }
+    } catch (error) {
+      if (error.data.message) {
+        toast.error(error.data.message);
+      } else {
+        setError(error.data.message);
       }
     }
   };

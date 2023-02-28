@@ -44,7 +44,7 @@ function App() {
 
   return (
     <div className="relative h-screen">
-      <Topbar page_title="" />
+      {/* <Topbar page_title="" /> */}
       <div>
         <div
           onClick={() => navigate("/user/search")}

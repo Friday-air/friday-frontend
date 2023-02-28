@@ -15,7 +15,7 @@ export default function AppsList() {
   const navigate = useNavigate();
   const handleNext = async (id) => {
     setSelectedApp(id);
-    navigate("/user/apps/new-list/" + id);
+    navigate(`/user/apps/new-list/${id}`);
   };
 
   //search
@@ -30,7 +30,8 @@ export default function AppsList() {
   };
 
   return (
-    <Layout page_title="Add Apps">
+    <>
+    {/* <Layout page_title="Add Apps"> */}
       {/* Breadcrumb */}
       <div className="relative m-3">
         <div className="relative">
@@ -53,24 +54,24 @@ export default function AppsList() {
       {/* content start  */}
       {!isLoading ? (
         <div className="grid grid-cols-2 gap-4 m-3 md:grid-cols-4 lg:grid-cols-3">
-          {apps.data.map((app) => (
-            <div
+          {apps.data.map((app) => {
+            return <div
               key={app.id}
               className={
                 selected_app === app.id
                   ? "border-2 border-blue-500 flex flex-col items-center justify-center p-3 bg-white rounded-md"
                   : "border-2  border-white flex flex-col items-center justify-center p-3 bg-white rounded-md"
               }
-              onClick={() => handleNext(app.id)}
+              onClick={() => handleNext(app?._id)}
             >
               <div className="flex items-center justify-center w-20 h-20 mb-3 bg-gray-50 rounded">
-                <img src={app.image} alt={app.name} className="w-10 h-10" />
+                <img src={`http://localhost:8000/public/${app?.image}`} alt={app.name} className="w-10 h-10" />
               </div>
               <h3 className="mb-2 text-sm font-semibold text-center">
                 {app.name}
               </h3>
             </div>
-          ))}
+          })}
         </div>
       ) : (
         <div className="flex items-center justify-center h-[50vh]">
@@ -79,7 +80,7 @@ export default function AppsList() {
               No app found! Please add your app.
             </p>
             <button
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate("/user/dashboard")}
               className="btn-primary"
             >
               Go back to home
@@ -88,6 +89,7 @@ export default function AppsList() {
         </div>
       )}
       {/* content end  */}
-    </Layout>
+    {/* </Layout> */}
+    </>
   );
 }

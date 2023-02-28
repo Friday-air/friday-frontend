@@ -4,11 +4,11 @@ const appApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     //GET /user/apps
     getApps: builder.query({
-      query: () => "/user/apps",
+      query: () => "/app/getApps",
     }),
     //GET  /user/connected-apps
     getConnectedApps: builder.query({
-      query: () => "/user/connected-apps",
+      query: () => "/connect/getConnectedUser",
     }),
     //POST /user/apps
     createApp: builder.mutation({
@@ -20,7 +20,7 @@ const appApiSlice = apiSlice.injectEndpoints({
     }),
     //GET /user/apps/:app_id
     getApp: builder.query({
-      query: (app_id) => `/user/app/${app_id}`,
+      query: (app_id) => `/connect/getApp/${app_id}`,
     }),
     //POST /user/apps/quickbooks/connection/success
     connectQuickbooksSuccess: builder.mutation({
