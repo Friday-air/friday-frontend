@@ -54,7 +54,7 @@ export default function AppsList() {
       {/* content start  */}
       {!isLoading ? (
         <div className="grid grid-cols-2 gap-4 m-3 md:grid-cols-4 lg:grid-cols-3">
-          {apps.data.map((app) => {
+          {apps?.data?.map((app) => {
             return <div
               key={app.id}
               className={
